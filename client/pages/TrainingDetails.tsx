@@ -27,8 +27,8 @@ export default function TrainingDetails() {
     };
 
     return (
-        <div className="min-h-screen w-full bg-white text-black font-sans flex flex-col">
-            <div className="mx-auto w-full max-w-md bg-white flex-1 flex flex-col relative pb-32">
+        <div className="min-h-[100dvh] w-full bg-white text-black font-sans flex flex-col">
+            <div className="mx-auto w-full max-w-md bg-white flex-1 flex flex-col relative pb-safe">
 
                 {/* Header */}
                 <div className="sticky top-0 z-10 bg-white px-4 py-4 flex items-center gap-4 border-b border-gray-50">
@@ -48,7 +48,7 @@ export default function TrainingDetails() {
                     <div className="space-y-2">
                         <Label className="text-gray-700 font-bold">Number of People</Label>
                         <Select value={participants} onValueChange={setParticipants}>
-                            <SelectTrigger className="h-12 rounded-xl border-gray-200 bg-gray-50 focus:bg-white transition-colors">
+                            <SelectTrigger className="h-12 rounded-xl border-gray-200 bg-gray-50 focus:bg-white transition-colors text-base">
                                 <SelectValue placeholder="Select participants" />
                             </SelectTrigger>
                             <SelectContent>
@@ -72,7 +72,7 @@ export default function TrainingDetails() {
                                     value={guestName}
                                     onChange={(e) => setGuestName(e.target.value)}
                                     placeholder="Enter full name"
-                                    className="h-12 rounded-xl border-gray-200 bg-gray-50 focus:bg-white pl-10 transition-colors"
+                                    className="h-12 rounded-xl border-gray-200 bg-gray-50 focus:bg-white pl-10 transition-colors text-base"
                                 />
                                 <User className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
                             </div>
@@ -82,7 +82,7 @@ export default function TrainingDetails() {
                             <span className="text-xs font-semibold text-gray-500 uppercase">Email Address (Optional)</span>
                             <Input
                                 placeholder="guest@example.com"
-                                className="h-12 rounded-xl border-gray-200 bg-gray-50 focus:bg-white transition-colors"
+                                className="h-12 rounded-xl border-gray-200 bg-gray-50 focus:bg-white transition-colors text-base"
                             />
                         </div>
                     </div>
@@ -92,7 +92,7 @@ export default function TrainingDetails() {
                         <Label className="text-gray-700 font-bold">Special Requests / Notes</Label>
                         <Textarea
                             placeholder="Any health conditions, focus areas, or access requirements..."
-                            className="min-h-[120px] rounded-xl border-gray-200 bg-gray-50 focus:bg-white resize-none p-4 transition-colors"
+                            className="min-h-[120px] rounded-xl border-gray-200 bg-gray-50 focus:bg-white resize-none p-4 transition-colors text-base"
                         />
                     </div>
 
@@ -101,7 +101,7 @@ export default function TrainingDetails() {
             </div>
 
             {/* Sticky Bottom Action */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 pb-6 z-20">
+            <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 pb-safe z-20">
                 <div className="mx-auto max-w-md">
                     <Button
                         className="w-full h-12 rounded-lg bg-black text-white hover:bg-gray-900 font-bold text-sm"

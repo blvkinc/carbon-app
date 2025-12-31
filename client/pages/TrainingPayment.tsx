@@ -10,8 +10,8 @@ export default function TrainingPayment() {
     const [selectedMethod, setSelectedMethod] = useState<string>("card1");
 
     return (
-        <div className="min-h-screen w-full bg-white text-black font-sans flex flex-col">
-            <div className="mx-auto w-full max-w-md bg-white flex-1 flex flex-col relative pb-32">
+        <div className="min-h-[100dvh] w-full bg-white text-black font-sans flex flex-col">
+            <div className="mx-auto w-full max-w-md bg-white flex-1 flex flex-col relative pb-safe">
 
                 {/* Header */}
                 <div className="sticky top-0 z-10 bg-white px-4 py-4 flex items-center justify-between">
@@ -144,7 +144,7 @@ export default function TrainingPayment() {
             </div>
 
             {/* Sticky Bottom Actions */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white p-4 pb-6 z-20 space-y-3">
+            <div className="fixed bottom-0 left-0 right-0 bg-white p-4 pb-safe z-20 space-y-3">
                 <div className="mx-auto max-w-md space-y-3">
                     <div className="w-full bg-[#ECFDF5] rounded-xl p-3 flex items-center justify-center gap-2">
                         <Gift className="h-4 w-4 text-[#10B981]" />

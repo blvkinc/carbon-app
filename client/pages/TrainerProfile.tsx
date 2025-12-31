@@ -15,8 +15,8 @@ export default function TrainerProfile() {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen w-full bg-white text-black font-sans pb-24">
-            <div className="mx-auto max-w-md bg-white min-h-screen relative">
+        <div className="min-h-[100dvh] w-full bg-white text-black font-sans pb-safe">
+            <div className="mx-auto max-w-md bg-white min-h-[100dvh] relative">
 
                 {/* 1. Header Image Section */}
                 <div className="relative h-64 w-full">
@@ -276,7 +276,7 @@ export default function TrainerProfile() {
                 </div>
 
                 {/* 11. Bottom Sticky Bar */}
-                <div className="fixed bottom-0 left-0 right-0 border-t border-gray-100 bg-white p-4 pb-6 z-20">
+                <div className="fixed bottom-0 left-0 right-0 border-t border-gray-100 bg-white p-4 pb-safe z-20">
                     <div className="mx-auto max-w-md flex items-center justify-between gap-4">
                         <div className="flex flex-col">
                             <span className="text-[10px] text-gray-500 font-medium">Our Packages</span>

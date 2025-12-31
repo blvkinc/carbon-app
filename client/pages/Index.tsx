@@ -49,8 +49,8 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-white text-black">
-      <div className="mx-auto flex min-h-screen max-w-md flex-col">
+    <div className="min-h-[100dvh] w-full bg-white text-black">
+      <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col pb-safe">
         {/* Header */}
         <div className="sticky top-0 z-10 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/60">
           <div className="flex items-center justify-between px-4 py-3">

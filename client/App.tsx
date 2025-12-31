@@ -13,7 +13,9 @@ import TrainerProfile from "./pages/TrainerProfile";
 import BookingDateTime from "./pages/BookingDateTime";
 import BookingReview from "./pages/BookingReview";
 import Payment from "./pages/Payment";
+
 import BookingSuccess from "./pages/BookingSuccess";
+import PackageRedemption from "./pages/PackageRedemption";
 import TrainingServiceSelection from "./pages/TrainingServiceSelection";
 import TrainingSessionProfile from "./pages/TrainingSessionProfile";
 import TrainingDateTime from "./pages/TrainingDateTime";
@@ -37,7 +39,9 @@ const App = () => (
           <Route path="/booking/date-time" element={<BookingDateTime />} />
           <Route path="/booking/review" element={<BookingReview />} />
           <Route path="/booking/payment" element={<Payment />} />
+
           <Route path="/booking/success" element={<BookingSuccess />} />
+          <Route path="/package-redemption" element={<PackageRedemption />} />
 
           {/* Training Session Flow */}
           <Route path="/training/services" element={<TrainingServiceSelection />} />

@@ -1,11 +1,27 @@
+
 import { ArrowLeft, X, CreditCard, Gift, Wallet, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { AVAILABLE_PACKAGES, purchasePackage } from "@/lib/mockData";
 
 export default function Payment() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [selectedMethod, setSelectedMethod] = useState<string>("card1");
+
+    const packageId = location.state?.packageId;
+    const selectedPackage = AVAILABLE_PACKAGES.find(p => p.id === packageId);
+
+    const handlePayment = () => {
+        if (selectedPackage) {
+            purchasePackage(selectedPackage.id);
+            navigate("/booking/success", { state: { purchasedItem: selectedPackage } });
+        } else {
+            // Fallback for other flows (not implemented in this task)
+            navigate("/booking/success");
+        }
+    };
 
     return (
         <div className="min-h-screen w-full bg-white text-black font-sans flex flex-col">
@@ -30,6 +46,22 @@ export default function Payment() {
 
                 {/* Content */}
                 <div className="px-5 mt-2 space-y-6">
+
+                    {/* Order Summary (New) */}
+                    {selectedPackage && (
+                        <section className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <h2 className="text-gray-500 font-medium text-xs uppercase tracking-wider mb-2">Order Summary</h2>
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <div className="font-bold text-lg">{selectedPackage.name}</div>
+                                    <div className="text-xs text-gray-500">{selectedPackage.creditCount} Credits • Valid {selectedPackage.validityDays} Days</div>
+                                </div>
+                                <div className="font-bold text-lg text-[#D4A017]">
+                                    {selectedPackage.currency} {selectedPackage.price}
+                                </div>
+                            </div>
+                        </section>
+                    )}
 
                     {/* Select Method Section */}
                     <section className="space-y-4">
@@ -168,14 +200,14 @@ export default function Payment() {
                     {/* Loyalty Banner */}
                     <div className="w-full bg-[#ECFDF5] rounded-xl p-3 flex items-center justify-center gap-2">
                         <Gift className="h-4 w-4 text-[#10B981]" />
-                        <span className="text-xs font-bold text-[#10B981]">You'll Earn 800 Carbon loyalty points</span>
+                        <span className="text-xs font-bold text-[#10B981]">You'll Earn {selectedPackage ? selectedPackage.price * 1 : 800} Carbon loyalty points</span>
                     </div>
 
                     <Button
                         className="w-full h-12 rounded-lg bg-black text-white hover:bg-gray-900 font-bold text-sm"
-                        onClick={() => navigate("/booking/success")}
+                        onClick={handlePayment}
                     >
-                        Continue
+                        {selectedPackage ? `Pay ${selectedPackage.currency} ${selectedPackage.price}` : "Continue"}
                     </Button>
                 </div>
             </div>
@@ -183,3 +215,4 @@ export default function Payment() {
         </div>
     );
 }
+

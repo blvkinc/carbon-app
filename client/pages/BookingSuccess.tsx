@@ -1,9 +1,20 @@
-import { useNavigate } from "react-router-dom";
+
+import { useNavigate, useLocation } from "react-router-dom";
 import { Check, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function BookingSuccess() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const purchasedItem = location.state?.purchasedItem;
+
+    const successMessage = purchasedItem
+        ? `${purchasedItem.name} Purchased!`
+        : "Class Successfully booked";
+
+    const loyaltyPoints = purchasedItem
+        ? purchasedItem.price * 1
+        : 800;
 
     return (
         <div className="min-h-screen w-full bg-black text-white font-sans flex items-center justify-center p-6">
@@ -33,23 +44,31 @@ export default function BookingSuccess() {
                 </div>
 
                 {/* Text */}
-                <h1 className="text-xl font-bold text-white tracking-wide text-center">Class Successfully booked</h1>
+                <h1 className="text-xl font-bold text-white tracking-wide text-center">{successMessage}</h1>
 
                 {/* Loyalty Banner */}
                 <div className="w-full bg-[#1A1A1A] rounded-lg p-4 flex items-center justify-center gap-3 border border-white/5">
                     <Gift className="h-4 w-4 text-[#10B981]" />
-                    <span className="text-xs font-bold text-[#10B981] tracking-wide">You've Earn 800 Carbon loyalty points</span>
+                    <span className="text-xs font-bold text-[#10B981] tracking-wide">You've Earn {loyaltyPoints} Carbon loyalty points</span>
                 </div>
+
 
                 {/* Action Button */}
                 <Button
                     className="w-full h-12 rounded-lg bg-[#D4A017] hover:bg-[#C29010] text-white font-bold text-sm"
-                    onClick={() => navigate("/")}
+                    onClick={() => {
+                        if (purchasedItem) {
+                            navigate("/package-redemption", { state: { package: purchasedItem } });
+                        } else {
+                            navigate("/");
+                        }
+                    }}
                 >
-                    Manage Bookings
+                    {purchasedItem ? "View Package" : "Manage Bookings"}
                 </Button>
 
             </div>
         </div>
     );
 }
+

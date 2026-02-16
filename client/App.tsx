@@ -16,9 +16,9 @@ import Payment from "./pages/Payment";
 
 import BookingSuccess from "./pages/BookingSuccess";
 import PackageRedemption from "./pages/PackageRedemption";
+import TrainingPackageRedemption from "./pages/TrainingPackageRedemption";
 import TrainingServiceSelection from "./pages/TrainingServiceSelection";
 import TrainingSessionProfile from "./pages/TrainingSessionProfile";
-import TrainingDateTime from "./pages/TrainingDateTime";
 import TrainingDetails from "./pages/TrainingDetails";
 import TrainingReview from "./pages/TrainingReview";
 import TrainingPayment from "./pages/TrainingPayment";
@@ -42,11 +42,11 @@ const App = () => (
 
           <Route path="/booking/success" element={<BookingSuccess />} />
           <Route path="/package-redemption" element={<PackageRedemption />} />
+          <Route path="/training/package-redemption" element={<TrainingPackageRedemption />} />
 
           {/* Training Session Flow */}
           <Route path="/training/services" element={<TrainingServiceSelection />} />
           <Route path="/training/session" element={<TrainingSessionProfile />} />
-          <Route path="/training/date-time" element={<TrainingDateTime />} />
           <Route path="/training/details" element={<TrainingDetails />} />
           <Route path="/training/review" element={<TrainingReview />} />
           <Route path="/training/payment" element={<TrainingPayment />} />

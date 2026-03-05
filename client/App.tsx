@@ -15,6 +15,8 @@ import BookingReview from "./pages/BookingReview";
 import Payment from "./pages/Payment";
 
 import BookingSuccess from "./pages/BookingSuccess";
+import Profile from "./pages/Profile";
+import Wallet from "./pages/Wallet";
 import PackageRedemption from "./pages/PackageRedemption";
 import TrainingPackageRedemption from "./pages/TrainingPackageRedemption";
 import TrainingServiceSelection from "./pages/TrainingServiceSelection";
@@ -41,6 +43,8 @@ const App = () => (
           <Route path="/booking/payment" element={<Payment />} />
 
           <Route path="/booking/success" element={<BookingSuccess />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/wallet" element={<Wallet />} />
           <Route path="/package-redemption" element={<PackageRedemption />} />
           <Route path="/training/package-redemption" element={<TrainingPackageRedemption />} />
 

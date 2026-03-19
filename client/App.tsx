@@ -13,6 +13,11 @@ import TrainerProfile from "./pages/TrainerProfile";
 import BookingDateTime from "./pages/BookingDateTime";
 import BookingReview from "./pages/BookingReview";
 import Payment from "./pages/Payment";
+import AdminComplaints from "./pages/AdminComplaints";
+import AddComplaint from "./pages/AddComplaint";
+import ComplaintSuccess from "./pages/ComplaintSuccess";
+import BookingDetails from "./pages/BookingDetails";
+import ComplaintsDashboard from "./pages/ComplaintsDashboard";
 
 import BookingSuccess from "./pages/BookingSuccess";
 import Profile from "./pages/Profile";
@@ -55,6 +60,11 @@ const App = () => (
           <Route path="/training/review" element={<TrainingReview />} />
           <Route path="/training/payment" element={<TrainingPayment />} />
           <Route path="/training/success" element={<TrainingSuccess />} />
+          <Route path="/admin/complaints" element={<AdminComplaints />} />
+          <Route path="/complaint/add" element={<AddComplaint />} />
+          <Route path="/complaint/success" element={<ComplaintSuccess />} />
+          <Route path="/booking/details" element={<BookingDetails />} />
+          <Route path="/complaints" element={<ComplaintsDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

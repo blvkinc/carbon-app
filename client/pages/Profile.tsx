@@ -1,14 +1,29 @@
 import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 import {
     Sun, Bell, Wallet as WalletIcon, ChevronRight, Crown,
-    Box, BarChart2, MessageSquare, Shield, Headset,
-    HelpCircle, FileText, LogOut, Home, Clock, Heart, User
+    MessageSquare, Shield, Headset,
+    HelpCircle, FileText, LogOut, Home, Clock, Heart, User, AlertTriangle, Box, BarChart2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { getBookings } from "@/lib/mockData";
+import { canCancelBooking, canMakeComplaint, getCancellationPolicyMessage, getComplaintPolicyMessage } from "@/lib/policyEngine";
+import { useState } from "react";
+import { Booking } from "@shared/api";
 
 export default function Profile() {
     const navigate = useNavigate();
+    const [bookings, setBookings] = useState<Booking[]>(getBookings());
+
+    const handleCancel = (id: string) => {
+        setBookings(prev => prev.map(b => b.id === id ? { ...b, status: 'Cancelled' as const } : b));
+        alert("Booking cancelled successfully.");
+    };
+
+    const handleComplaint = (booking: Booking) => {
+        navigate("/complaint/add", { state: { booking } });
+    };
 
     return (
         <div className="min-h-[100dvh] w-full bg-[#FAFAFA] text-black font-sans pb-20 relative">
@@ -109,22 +124,59 @@ export default function Profile() {
                         </div>
 
                         <div className="flex gap-3 overflow-x-auto pb-4 snap-x hide-scrollbar">
-                            {[1, 2].map((i) => (
-                                <div key={i} className="min-w-[260px] bg-white rounded-2xl border border-gray-100 shadow-sm p-3 snap-center">
+                            {bookings.map((booking) => (
+                                <div 
+                                    key={booking.id} 
+                                    className="min-w-[280px] bg-white rounded-2xl border border-gray-100 shadow-sm p-3 snap-center flex flex-col cursor-pointer hover:border-black transition-all group"
+                                    onClick={() => navigate("/booking/details", { state: { booking } })}
+                                >
                                     <div className="flex justify-between items-start mb-2">
-                                        <img
-                                            src="https://images.unsplash.com/photo-1549476464-37392f717541?q=80&w=64&auto=format&fit=crop"
-                                            alt="Session"
-                                            className="w-10 h-10 rounded-lg object-cover"
-                                        />
-                                        <span className="text-[10px] font-bold text-[#8B5CF6] bg-[#F3E8FF] px-2 py-1 rounded-md">
-                                            PT Session
+                                        <div className="flex gap-3">
+                                            <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
+                                                <Clock className="w-5 h-5 text-gray-500" />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-semibold text-sm leading-tight">{booking.serviceName}</h3>
+                                                <p className="text-[10px] text-gray-500">{booking.serviceType}</p>
+                                            </div>
+                                        </div>
+                                        <span className={cn(
+                                            "text-[10px] font-bold px-2 py-1 rounded-md",
+                                            booking.status === 'Booked' ? "bg-blue-50 text-blue-600" :
+                                            booking.status === 'Used' ? "bg-green-50 text-green-600" :
+                                            booking.status === 'Cancelled' ? "bg-red-50 text-red-600" :
+                                            "bg-gray-50 text-gray-600"
+                                        )}>
+                                            {booking.status}
                                         </span>
                                     </div>
-                                    <h3 className="font-semibold text-sm mb-1">Mixed Martial art</h3>
-                                    <p className="text-xs text-gray-500 mb-2">Al Quoz Industrial Area</p>
-                                    <div className="text-[11px] text-gray-500 flex items-center gap-1.5">
-                                        Boxing <span className="w-1 h-1 rounded-full bg-gray-300"></span> 2nd Sept, 2024 <span className="w-1 h-1 rounded-full bg-gray-300"></span> 2:45am
+                                    
+                                    <div className="text-[11px] text-gray-500 flex items-center gap-1.5 mb-4">
+                                        {new Date(booking.startTime).toLocaleDateString()} <span className="w-1 h-1 rounded-full bg-gray-300"></span> {new Date(booking.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </div>
+
+                                    <div className="mt-auto flex gap-2">
+                                        {canCancelBooking(booking) && (
+                                            <Button 
+                                                variant="outline" 
+                                                className="flex-1 h-8 text-[11px] font-bold border-red-100 text-red-600 hover:bg-red-50"
+                                                onClick={() => handleCancel(booking.id)}
+                                            >
+                                                Cancel
+                                            </Button>
+                                        )}
+                                        {canMakeComplaint(booking) && (
+                                            <Button 
+                                                variant="outline" 
+                                                className="flex-1 h-8 text-[11px] font-bold border-orange-100 text-orange-600 hover:bg-orange-50"
+                                                onClick={() => handleComplaint(booking)}
+                                            >
+                                                Complain
+                                            </Button>
+                                        )}
+                                        {!canCancelBooking(booking) && booking.status === 'Booked' && (
+                                            <p className="text-[10px] text-gray-400 italic">Too late to cancel</p>
+                                        )}
                                     </div>
                                 </div>
                             ))}
@@ -135,13 +187,16 @@ export default function Profile() {
                     <div className="space-y-1">
                         {[
                             { icon: Box, label: "My Inventory" },
-                            { icon: BarChart2, label: "Statistics" },
-                            { icon: MessageSquare, label: "Reviews" },
+                            { icon: MessageSquare, label: "Complaints", path: "/complaints" },
+                            { icon: Clock, label: "Order History" },
                             { icon: Shield, label: "Refer a Friend" },
                             { icon: Headset, label: "Support" },
-                            { icon: HelpCircle, label: "FAQs" },
                         ].map((item, idx) => (
-                            <button key={idx} className="w-full flex items-center justify-between py-4 border-b border-gray-50 last:border-0 hover:bg-gray-50 transition-colors px-2 rounded-lg">
+                            <button 
+                                key={idx} 
+                                className="w-full flex items-center justify-between py-4 border-b border-gray-50 last:border-0 hover:bg-gray-50 transition-colors px-2 rounded-lg"
+                                onClick={() => item.path && navigate(item.path)}
+                            >
                                 <div className="flex items-center gap-4">
                                     <item.icon className="w-5 h-5 text-gray-700 stroke-[1.5]" />
                                     <span className="font-semibold text-sm">{item.label}</span>

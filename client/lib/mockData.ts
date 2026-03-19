@@ -1,3 +1,5 @@
+import { Booking } from "@shared/api";
+
 export interface ClassPackage {
     id: string;
     name: string;
@@ -81,3 +83,40 @@ export const redeemCredit = (packageId: string) => {
     console.log("Credit redeemed. Remaining:", userInventory[itemIndex].remainingCredits);
     return true;
 };
+
+export const MOCK_BOOKINGS: Booking[] = [
+    {
+        id: "b1",
+        serviceType: "Class",
+        serviceName: "Morning Hatha Yoga",
+        startTime: new Date(Date.now() + 15 * 3600000).toISOString(), // 15 hours from now (can cancel)
+        endTime: new Date(Date.now() + 16 * 3600000).toISOString(),
+        status: "Booked",
+    },
+    {
+        id: "b2",
+        serviceType: "Class",
+        serviceName: "Vinyasa Flow",
+        startTime: new Date(Date.now() + 5 * 3600000).toISOString(), // 5 hours from now (cannot cancel)
+        endTime: new Date(Date.now() + 6 * 3600000).toISOString(),
+        status: "Booked",
+    },
+    {
+        id: "b3",
+        serviceType: "Class",
+        serviceName: "Mat Pilates",
+        startTime: new Date(Date.now() - 30 * 3600000).toISOString(), // 30 hours ago
+        endTime: new Date(Date.now() - 29 * 3600000).toISOString(),   // finished 29 hours ago (can complain)
+        status: "Used",
+    },
+    {
+        id: "b4",
+        serviceType: "Personal Training",
+        serviceName: "1-on-1 Boxing",
+        startTime: new Date(Date.now() - 5 * 3600000).toISOString(),  // 5 hours ago
+        endTime: new Date(Date.now() - 4 * 3600000).toISOString(),    // finished 4 hours ago (cannot complain yet)
+        status: "Used",
+    }
+];
+
+export const getBookings = () => MOCK_BOOKINGS;
